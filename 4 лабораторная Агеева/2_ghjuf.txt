@@ -1,0 +1,51 @@
+// ConsoleApplication19.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+//
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <windows.h> 
+#include <conio.h> 
+
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "rus");
+    char lpszAppName[] = "C:\\ConsoleApplication20.exe";
+    STARTUPINFO si;
+    PROCESS_INFORMATION piApp;
+    ZeroMemory(&si, sizeof(STARTUPINFO));
+    si.cb = sizeof(STARTUPINFO);
+
+    int a[151];
+    int j = 10;
+    for (int i = 1; i <= 150; i++) {
+        a[i] = i;
+        cout << "Элемент массива номер " << i << " = " << a[i] << endl;
+    }
+  
+    ofstream f;
+    int g = 1;
+    while (g <= 150) {
+        f.open("C:\\123.txt");
+        for (int i = g; i <= j; i++) {
+            f << a[i] << endl;
+        }
+        f.close();
+
+        CreateProcess(lpszAppName, NULL, NULL, NULL, FALSE,
+            NULL/*CREATE_NEW_CONSOLE*/, NULL, NULL, &si, &piApp);
+
+        // ждем завершения созданного прцесса
+        WaitForSingleObject(piApp.hProcess, INFINITE);
+        // закрываем дескрипторы этого процесса в текущем процессе
+        CloseHandle(piApp.hThread);
+        CloseHandle(piApp.hProcess);
+
+        j += 10;
+        g += 10;
+    }
+    
+}
+

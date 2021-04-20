@@ -1,0 +1,59 @@
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+bool isSimple(int num);
+
+int main()
+{
+    setlocale(LC_ALL, "rus");
+    ifstream fin("C:\\123.txt");
+    int A[300];
+    int l, N;
+
+    int k = 0;
+    while (fin >> N)
+    {
+        A[k++] = N;
+    }
+    cout << endl << "Исходный массив:" << endl;
+    for (int i = 0; i < k; i++)
+    {
+        cout << A[i] << " " << endl;
+        l = A[i];
+
+    }
+
+    cout << "_______________________" << endl;
+
+    fin.close();
+
+
+    cout << endl;
+    cout << "Простые числа: ";
+    for (int num = (l - 10); num < l; num++)
+    {
+
+        if (isSimple(num)) {
+            cout << num << " ";
+        }
+
+    }
+
+    return 0;
+}
+
+bool isSimple(int num)
+{
+    bool bSimple = true;
+    if (num < 0)
+        num = num * (-1);
+    for (int i = 2; i <= 11 && bSimple; i++)
+    {
+        if (i != num)
+            bSimple = num % i != 0;
+    }
+    return bSimple;
+}
